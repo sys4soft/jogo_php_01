@@ -52,10 +52,16 @@ function prepare_game($total_questions)
 
     }
 
-    echo '<pre>';
-    print_r($questions);
-    echo '</pre>';
-    die();
+    // save data to session
+    $_SESSION['questions'] = $questions;
+
+    // initialize score
+    $_SESSION['game'] = [
+        'total_questions' => $total_questions,
+        'current_question' => 0,
+        'correct_answers' => 0,
+        'incorrect_answers' => 0,
+    ];
 }
 
 ?>
