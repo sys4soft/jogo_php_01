@@ -15,8 +15,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function prepare_game($total_questions)
 {
-    // lets prepare all game here
-    die('prepare game');
+    global $capitals;
+
+    // get random items
+    $ids = [];
+    while(count($ids) < $total_questions) {
+        $id = rand(0, count($capitals) - 1);
+        if(!in_array($id, $ids)) {
+            $ids[] = $id;
+        }
+    }
+
+    // define first data for $questions
+    $questions = [];
+    foreach($ids as $id) {
+        
+        //get correct answer and two incorrect answers
+        $answers = [];
+        $answers[] = $id;
+        while(count($answers) < 3) {
+            $tmp = rand(0, count($capitals) - 1);
+            if(!in_array($tmp, $answers)) {
+                $answers[] = $tmp;
+            }
+        }
+
+        // add 3 possible answers to the question
+        shuffle($answers);
+
+        // add question to $questions
+        $questions[] = [
+            'question' => $capitals[$id][0],    // country
+            'correct_answer' => $id,            // $capitals[$id][1] => capital
+            'answers' => $answers               // collection of 3 possible answers. One of them is correct.
+        ];
+
+    }
+
+    echo '<pre>';
+    print_r($questions);
+    echo '</pre>';
+    die();
 }
 
 ?>
