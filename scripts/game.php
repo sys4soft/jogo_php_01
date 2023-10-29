@@ -1,5 +1,35 @@
 <?php
 
+// check if there was a response
+if(isset($_GET['answer'])) {
+
+    $current_question = $_SESSION['game']['current_question'];
+
+    // get answer
+    $answer = $_GET['answer'];
+    $answer_given = $_SESSION['questions'][$current_question]['answers'][$answer];
+
+    // check if answer is correct
+    if($answer_given == $_SESSION['questions'][$_SESSION['game']['current_question']]['correct_answer']) {
+        $_SESSION['game']['correct_answers']++;
+    } else {
+        $_SESSION['game']['incorrect_answers']++;
+    }
+
+    // check if game is over
+    if($_SESSION['game']['current_question'] == $_SESSION['game']['total_questions'] - 1) {
+        header('Location: index.php?route=gameover');
+        exit;
+    }
+
+    // increment current question
+    $_SESSION['game']['current_question']++;
+
+    // redirect to next question
+    header('Location: index.php?route=game');
+    exit;
+}
+
 // set current question values
 $current_question = $_SESSION['game']['current_question'];
 $total_questions = $_SESSION['game']['total_questions'];
@@ -35,12 +65,21 @@ $answers = $_SESSION['questions'][$current_question]['answers'];
                 <hr>
 
                 <div class="px-5 mt-5">
-                    <h3 class="mb-5" style="cursor: pointer"><?= $capitals[$answers[0]][1] ?></h3>
-                    <h3 class="mb-5" style="cursor: pointer"><?= $capitals[$answers[1]][1] ?></h3>
-                    <h3 class="mb-5" style="cursor: pointer"><?= $capitals[$answers[2]][1] ?></h3>
+                    <h3 class="mb-5" style="cursor: pointer" id="answer_0"><?= $capitals[$answers[0]][1] ?></h3>
+                    <h3 class="mb-5" style="cursor: pointer" id="answer_1"><?= $capitals[$answers[1]][1] ?></h3>
+                    <h3 class="mb-5" style="cursor: pointer" id="answer_2"><?= $capitals[$answers[2]][1] ?></h3>
                 </div>
 
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll("[id^='answer_']").forEach(element => {
+        element.addEventListener('click', () => {
+            let id = element.id.split('_')[1];
+            window.location.href = `index.php?route=game&answer=${id}`;
+        });
+    });
+</script>
