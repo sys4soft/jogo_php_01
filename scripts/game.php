@@ -65,9 +65,13 @@ $answers = $_SESSION['questions'][$current_question]['answers'];
                 <hr>
 
                 <div class="px-5 mt-5">
-                    <h3 class="mb-5" style="cursor: pointer" id="answer_0"><?= $capitals[$answers[0]][1] ?></h3>
-                    <h3 class="mb-5" style="cursor: pointer" id="answer_1"><?= $capitals[$answers[1]][1] ?></h3>
-                    <h3 class="mb-5" style="cursor: pointer" id="answer_2"><?= $capitals[$answers[2]][1] ?></h3>
+                    <h3 class="mb-5 border border-3 p-3" style="cursor: pointer" id="answer_0"><?= $capitals[$answers[0]][1] ?></h3>
+                    <h3 class="mb-5 border border-3 p-3" style="cursor: pointer" id="answer_1"><?= $capitals[$answers[1]][1] ?></h3>
+                    <h3 class="mb-5 border border-3 p-3" style="cursor: pointer" id="answer_2"><?= $capitals[$answers[2]][1] ?></h3>
+                </div>
+
+                <div class="text-center">
+                    <a href="index.php?route=start" class="btn btn-secondary p-3 w-25">Desistir</a>
                 </div>
 
             </div>
